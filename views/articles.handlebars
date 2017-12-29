@@ -17,10 +17,10 @@
   {{#each dbArticle}}
   <div class="col s12 div"> 
     <h4 class="headers blue-grey">{{title}} 
-      <button class="btn indigo darken-4 note right" data-title="{{title}}" data-sum="{{sum}}" data-link="{{link}}" data-id="{{_id}}">Note</button> 
-      <button class="btn red darken-4 delete right" data-title="{{title}}" data-sum="{{sum}}" data-link="{{link}}">Delete</button>
+      <button class="btn indigo darken-4 note right" data-title="{{title}}" data-img="{{img}}" data-link="{{link}}" data-id="{{_id}}">Note</button> 
+      <button class="btn red darken-4 delete right" data-title="{{title}}" data-img="{{img}}" data-link="{{link}}">Delete</button>
     </h4>
-    <img src="{{sum}}">
+    <img src="{{img}}">
     <p>Link: <a class="link" href="https://www.flixster.com{{link}}" target="_blank">https://www.flixster.com{{link}}</a></p>
     <div class="notesHere" id="{{_id}}">
       <ul>
@@ -34,7 +34,7 @@
           <label for="icon_prefix2">Note</label>
       </form>
       <div>
-        <a class="btn yellow lighten-2 saveNote" data-id="{{_id}}">Save</a>
+        <button class="btn lime darken-4 saveNote" data-id="{{_id}}">Save</button>
       </div>
     </div>
   </div>

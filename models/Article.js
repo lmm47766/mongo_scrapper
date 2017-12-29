@@ -9,18 +9,18 @@ var ArticleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
-    unique: false
+    unique: true
 
   },
   // `link` is required and of type String
   link: {
     type: String,
-    unique: false
+    unique: true
   },
 
-    sum: {
+  img: {
     type: String,
-    unique: false
+    unique: true
   }
   ,
   // // `note` is an object that stores a Note id

@@ -4,7 +4,6 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
-var fs = require('fs');
 var path = require("path");
 var PORT = process.env.PORT || 3000;
 
@@ -72,7 +71,7 @@ app.get("/scrape", function(req, res) {
       // Save an empty result object
         var result = {};
         // Add the text and href of every link, and save them as properties of the result object
-        result.sum = $(this).find('a').children('img').attr('src');
+        result.img = $(this).find('a').children('img').attr('src');
         result.title = $(this).find('.movie-title').text();
         result.link = $(this).find('a').attr('href');
 
@@ -104,14 +103,14 @@ app.get("/scrape", function(req, res) {
 app.post("/save", function(req, res) {
 
   console.log(req.body.info.title);
-  console.log(req.body.info.sum);
+  console.log(req.body.info.img);
   console.log(req.body.info.link);
 
   db.Article
     .create({
 
       title: req.body.info.title,
-      sum: req.body.info.sum,
+      img: req.body.info.img,
       link: req.body.info.link
 
     }).then(function(result) {

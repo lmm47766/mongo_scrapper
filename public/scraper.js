@@ -1,27 +1,21 @@
-
-
 var noteflag = false;
 
-
-
 $(document).ready(function() {
-
   $(".notesHere").hide();
   $(".delNote").hide();
   $(".bodyHere").hide();
-
 });
 
 $(document).on("click", ".save", function() {
 
   var title = $(this).attr("data-title");
-  var sum = $(this).attr("data-sum");
+  var img = $(this).attr("data-img");
   var link = $(this).attr("data-link");
 
   var info = {
 
     title: title,
-    sum: sum,
+    img: img,
     link: link
   }
 
@@ -29,16 +23,12 @@ $(document).on("click", ".save", function() {
     info
   }, function(done) {
 
-    console.log(done);
-
     if (done === "") {
+      alert("saved")
 
-      Materialize.toast('Article Saved!', 4000);
-
-    } else {
-
-      Materialize.toast('ERROR: Article Already Saved in db!', 4000);
-      Materialize.toast('Try Another Article!', 4000);
+    } 
+    else {
+      alert('Already Saved in db!');
 
     }
   })
@@ -157,15 +147,11 @@ $(".saveNote").on("click", function(event) {
 
 $(".delClick").on("click", function(event) {
 
-
   var ids = $(this).attr("data-id");
-
-
 
   $.post("/del/" + ids, function(done) {
 
     location.reload();
-
 
   });
 
