@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col s12">
+    <h1>Flixster Scraper</h1>
+    <nav>
+      <div class="nav-wrapper black">
+        <ul class="left hide-on-med-and-down">
+          <li><a href="/" class="btn green darken-3">Home</a></li>
+          <li><a href="/articles" class="btn light-blue darken-4">Saved Movies</a></li>
+          <li><a href="/scrape" class="clicky btn red darken-4">Flixster Scrape</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="row">
+  {{#each dbArticle}}
+  <div class="col s12 div"> 
+    <h4 class="headers blue-grey">{{title}} 
+      <button class="btn indigo darken-4 note right" data-title="{{title}}" data-sum="{{sum}}" data-link="{{link}}" data-id="{{_id}}">Note</button> 
+      <button class="btn red darken-4 delete right" data-title="{{title}}" data-sum="{{sum}}" data-link="{{link}}">Delete</button>
+    </h4>
+    <img src="{{sum}}">
+    <p>Link: <a class="link" href="https://www.flixster.com{{link}}" target="_blank">https://www.flixster.com{{link}}</a></p>
+    <div class="notesHere" id="{{_id}}">
+      <ul>
+        <p class="delNote">
+          <span id="size">Note:</span><li class="bodyHere" id="print{{_id}}"></li>
+          <button class="btn red delClick" id="del{{_id}}">Delete Note</button>
+        </p>
+      </ul>
+      <form id="noteBody" class="input-field">
+          <textarea class="materialize-textarea" name="body" type="text" id=note{{_id}}></textarea>
+          <label for="icon_prefix2">Note</label>
+      </form>
+      <div>
+        <a class="btn yellow lighten-2 saveNote" data-id="{{_id}}">Save</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
