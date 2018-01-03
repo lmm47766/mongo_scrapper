@@ -6,17 +6,17 @@
         <ul class="left hide-on-med-and-down">
           <li><a href="/" class="btn green darken-3">Home</a></li>
           <li><a href="/articles" class="btn light-blue darken-4">Saved Movies</a></li>
-          <li><a href="/scrape" class="clicky btn red darken-4">Flixster Scrape</a></li>
+          <li><button class="scrape btn red darken-4">Flixster Scrape</button></li>
         </ul>
       </div>
     </nav>
   </div>
 </div>
 <div class="row">
-  {{#each data.youTube}}
+  {{#each dbFlixster}}
   <div class="col s12 div">
-    <h4 class="headers blue-grey">{{title}}
-    <button class="btn save teal darken-4" data-title="{{title}}" data-img="{{img}}" data-link="{{link}}">Save Movie</button>
+    <h4 class="headers blue-grey" data-title="{{title}}">{{title}}
+    <button class="btn save teal darken-4" data-link="{{link}}">Save Movie</button>
     </h4>
     <img class="col s4" src="{{img}}">
     <p class="col s8">Link: <a class="link" href="https://www.flixster.com{{link}}" target="_blank">https://www.flixster.com{{link}}</a></p>

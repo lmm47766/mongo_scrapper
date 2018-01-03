@@ -1,158 +1,107 @@
-var noteflag = false;
+$(function() {
 
-$(document).ready(function() {
-  $(".notesHere").hide();
-  $(".delNote").hide();
-  $(".bodyHere").hide();
-});
-
-$(document).on("click", ".save", function() {
-
-  var title = $(this).attr("data-title");
-  var img = $(this).attr("data-img");
-  var link = $(this).attr("data-link");
-
-  var info = {
-
-    title: title,
-    img: img,
-    link: link
-  }
-
-  $.post("/save", {
-    info
-  }, function(done) {
-
-    if (done === "") {
-      alert("saved")
-
-    } 
-    else {
-      alert('Already Saved in db!');
-
-    }
-  })
-
-});
+  $('.modal').modal();
 
 
-$(document).on("click", ".delete", function() {
+  $(".save").on("click", function(event) {
 
-  var title = $(this).attr("data-title");
-
-  var info = {
-
-    title: title
-  }
-
-  $.post("/delete", {
-    info
-  }, function(done) {
-
-    location.reload();
-  })
-
-});
-
-
-$(document).on("click", ".note", function() {
-
-  var ids = $(this).attr("data-id");
-
-
-  console.log(ids);
-
-  noteflag = !noteflag
-
-  if (noteflag === false) {
-
-
-    $("#" + ids).hide();
-    return false;
-
-  }
-
-
-  $.get("/articles/" + ids, function(done) {
-
-    // console.log(done.note.body);
-    console.log(done._id);
-
-
-    if (done.note === undefined || done.note === null) {
-
-      $("#del" + ids).hide();
-      $("#print" + ids).hide();
-      $("#" + ids).show();
-      return false;
+    var info = {
+      title: $(this).parent().attr("data-title"),
+      img: $(this).parent().parent().children("img").attr("src"),
+      link: $(this).attr("data-link")
     }
 
+    $.post("/save", {info});
 
-
-    if (noteflag === true) {
-
-      $(".delNote").show();
-      $("#" + ids).show();
-      $("#del" + ids).show();
-      $("#print" + ids).show();
-      $("#print" + done._id).empty();
-      $("#print" + done._id).prepend(done.note.body)
-
-    }
-
-
+    $(this).parent().parent().remove();
 
   });
 
-});
 
+  $(".delete").on("click", function(event) {
 
-$(".saveNote").on("click", function(event) {
+    var info = {
+      title: $(this).attr("data-title")
+    }
 
+    $.post("/delete", {info}, function(done) {
 
-  var ids = $(this).attr("data-id");
-  var body = $("#note" + ids).val().trim();
-
-  console.log(ids);
-  console.log(body);
-
-  var info = {
-
-    id: ids,
-    body: body
-  }
-
-
-  $.post("/save/" + ids, {
-    info
-  }, function(done) {
-    Materialize.toast('Note Saved!', 4000);
-
-    console.log(done.note);
-    console.log(done._id);
-
-    $(".delNote").show();
-    $(".bodyHere").show();
-    $("#print" + done._id).empty();
-    $("#print" + done._id).prepend(done.note.body);
-    $("#del" + done._id).attr("data-id", done.note._id);
-    $(".delNote").show();
-    $("#del" + ids).show();
-
-
-  });
-});
-
-
-
-$(".delClick").on("click", function(event) {
-
-  var ids = $(this).attr("data-id");
-
-  $.post("/del/" + ids, function(done) {
-
-    location.reload();
+      location.reload();
+    })
 
   });
 
+
+
+  $(".note").on("click", function(event) {
+
+    var ids = $(this).attr("data-id");
+    $("#submitButton").attr("data-id",ids)
+    console.log(ids)
+
+    $.get("/articles/" + ids, function(data) {
+
+      if (data.note === undefined) {
+        $('#comment-body').val("");
+      } 
+      else {
+        $('#comment-body').val(data.note.body);
+      }
+
+    });
+
+  });
+
+
+  $("#submitButton").on("click", function(event) {
+
+    var ids = $(this).attr("data-id");
+    var body = $('#comment-body').val().trim();
+    var info = {
+      id: ids,
+      body: body
+    }
+
+    $.post("/save/" + ids, { info }, function(done) {
+
+      Materialize.toast('Note Saved!', 4000);
+
+    });
+  });
+
+
+
+  $(".delClick").on("click", function(event) {
+
+    var ids = $(this).attr("data-id");
+
+    $.post("/del/" + ids, function(done) {
+
+      location.reload();
+
+    });
+
+  });
+
+
+  $(".scrape").on("click", function(event) {
+
+    $.get("/scrape", function(done) {
+
+      location.assign("/");
+
+    });
+
+  });
+
+
 });
+
+
+   
+
+
+
+
+
+
